@@ -101,14 +101,18 @@ export function getLocaleRedirect({
       if (!isPDomain || !isPLocale) {
         const scheme = `http${preferredDomain.http ? '' : 's'}`
         const rlocale = isPLocale ? '' : preferredLocale
-        return `${scheme}://${preferredDomain.domain}/${rlocale}`
+        return `${scheme}://${preferredDomain.domain}/${rlocale}${
+          nextConfig.trailingSlash ? '/' : ''
+        }`
       }
     }
 
     if (detectedLocale.toLowerCase() !== defaultLocale.toLowerCase()) {
       return formatUrl({
         ...urlParsed,
-        pathname: `${nextConfig.basePath || ''}/${detectedLocale}`,
+        pathname: `${nextConfig.basePath || ''}/${detectedLocale}${
+          nextConfig.trailingSlash ? '/' : ''
+        }`,
       })
     }
   }
